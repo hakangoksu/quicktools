@@ -22,12 +22,6 @@ char *trim_whitespace(char *str) {
     return str;
 }
 
-char *trim_leading_numbers(const char *str) {
-    const char *ptr = str;
-    while (*ptr && isdigit((unsigned char)*ptr)) ptr++;
-    return g_strdup(ptr);
-}
-
 void get_script_metadata(const char *path, char **name, char **desc) {
     FILE *file = fopen(path, "r");
     *name = NULL;
@@ -99,15 +93,13 @@ static void load_category_scripts(GtkWidget *widget, gpointer data) {
     char cat_path[512];
     snprintf(cat_path, sizeof(cat_path), "%s/%s", BASE_DIR, category_name);
 
-    char *display_category = trim_leading_numbers(category_name);
     GtkWidget *header = gtk_label_new(NULL);
     char markup[256];
-    snprintf(markup, sizeof(markup), "<span size='x-large' weight='bold'>%s</span>", display_category);
+    snprintf(markup, sizeof(markup), "<span size='x-large' weight='bold'>%s</span>", category_name);
     gtk_label_set_markup(GTK_LABEL(header), markup);
     gtk_widget_set_halign(header, GTK_ALIGN_START);
     gtk_widget_set_margin_bottom(header, 20);
     gtk_box_append(GTK_BOX(widgets->right_box), header);
-    g_free(display_category);
 
     DIR *d;
     struct dirent *dir;
@@ -212,13 +204,11 @@ static void activate(GtkApplication *app, gpointer user_data) {
     if (d) {
         while ((dir = readdir(d)) != NULL) {
             if (dir->d_type == DT_DIR && strcmp(dir->d_name, ".") != 0 && strcmp(dir->d_name, "..") != 0) {
-                char *display_name = trim_leading_numbers(dir->d_name);
-                GtkWidget *btn = gtk_button_new_with_label(display_name);
+                GtkWidget *btn = gtk_button_new_with_label(dir->d_name);
                 g_object_set_data(G_OBJECT(btn), "app_widgets", widgets);
                 char *cat_name_copy = g_strdup(dir->d_name);
                 g_signal_connect(btn, "clicked", G_CALLBACK(load_category_scripts), cat_name_copy);
                 gtk_box_append(GTK_BOX(left_box), btn);
-                g_free(display_name);
             }
         }
         closedir(d);

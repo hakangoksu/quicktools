@@ -3,6 +3,3 @@
 # Description: Starts "Update Quicktools" script
 
 curl -s https://raw.githubusercontent.com/hakangoksu/quicktools/main/setup.sh | bash
-killall -9 quicktools
-quicktools & disown
-exit 0

@@ -9,6 +9,7 @@ src/
 *.pkg.tar.xz
 *.log
 
+PKGBUILD
 # Editors & System
 .vscode/
 .idea/

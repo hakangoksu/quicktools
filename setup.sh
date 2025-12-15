@@ -4,6 +4,10 @@ GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m'
 
+CACHE_DIR="$HOME/.cache"
+PKG_DIR="$CACHE_DIR/quicktools_build"
+REPO_URL="https://github.com/hakangoksu/quicktools.git"
+
 echo -e "${GREEN}### QuickTools Setup ###${NC}"
 
 if ! command -v pacman &> /dev/null; then
@@ -20,21 +24,18 @@ if ! command -v git &> /dev/null || ! command -v makepkg &> /dev/null; then
     sudo pacman -S --needed base-devel git --noconfirm
 fi
 
-if [ -f "PKGBUILD" ]; then
-    echo "PKGBUILD found in current directory."
-else
-    if [ -d "quicktools" ]; then
-        echo "Directory 'quicktools' exists. Updating..."
-        cd quicktools
-        git pull
-    else
-        echo "Cloning repository..."
-        git clone https://github.com/hakangoksu/quicktools.git
-        cd quicktools
-    fi
+mkdir -p "$CACHE_DIR"
+
+if [ -d "$PKG_DIR" ]; then
+    echo "Cleaning up existing build directory: $PKG_DIR"
+    rm -rf "$PKG_DIR"
 fi
 
-echo "Cleaning up..."
+echo "Cloning repository into $PKG_DIR..."
+git clone "$REPO_URL" "$PKG_DIR"
+cd "$PKG_DIR"
+
+echo "Cleaning up files within $PKG_DIR..."
 rm -rf pkg/ src/ *.pkg.tar.zst
 
 echo -e "${GREEN}Building and installing...${NC}"

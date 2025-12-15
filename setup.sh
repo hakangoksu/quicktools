@@ -15,9 +15,6 @@ if ! command -v pacman &> /dev/null; then
     exit 1
 fi
 
-echo "Updating system..."
-sudo pacman -Syu --noconfirm
-
 echo "Checking dependencies..."
 if ! command -v git &> /dev/null || ! command -v makepkg &> /dev/null; then
     echo "Installing base-devel and git..."

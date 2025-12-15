@@ -1,0 +1,17 @@
+# Compiled Binary
+quicktools
+*.o
+
+# Arch Linux / Makepkg Build Artifacts
+pkg/
+src/
+*.pkg.tar.zst
+*.pkg.tar.xz
+*.log
+
+# Editors & System
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store

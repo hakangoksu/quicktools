@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=QuickTools
+Comment=Arch Linux Toolbox
+Exec=/usr/bin/quicktools
+Icon=utilities-terminal
+Terminal=false
+Categories=Utility;System;GTK;
+Keywords=arch;script;tools;

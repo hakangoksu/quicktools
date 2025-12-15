@@ -1,6 +1,6 @@
 # Maintainer: Hakan Göksu <hakan@goksu.me>
 pkgname=quicktools-git
-pkgver=r3.159c10d
+pkgver=0.1
 pkgrel=1
 pkgdesc="QuickTools Script Manager"
 arch=('x86_64')
